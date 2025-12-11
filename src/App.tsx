@@ -45,7 +45,7 @@ function App() {
                   className="w-16 h-16 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"
                 />
                 <h1 className="text-2xl font-bold text-white">Sayed Hussein</h1>
-                <p className="text-blue-100">Senior Software Engineer</p>
+                <p className="text-blue-100">Application Developer & Technical Solutions Engineer</p>
               </motion.div>
             </motion.div>
           ) : (
