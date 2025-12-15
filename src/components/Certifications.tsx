@@ -9,7 +9,7 @@ const Certifications: React.FC = () => {
       issuer: 'Google Cloud',
       date: '2025',
       credentialId: 'GAL',
-      description: 'Cloud computing fundamentals and AWS services knowledge',
+      description: 'A Generative AI Leader understands how generative AI can drive business transformation. They have a high-level understanding of Google Cloud’s generative AI solutions, can identify AI opportunities across industries, and help organizations adopt AI responsibly to accelerate innovation—no technical background required.',
       badgeUrl: 'https://www.credly.com/badges/cb8478ba-aa53-4711-814e-9aea0323c81b',
       skills: ['AI Ethics', 'Artificial Intelligence (AI)', 'Artificial Intelligence Applications', 'Business Acumen', 'Business Analysis', 'Business Awareness', 'Cloud Computing', 'Generative AI', 'Google Cloud Platform (GCP)'. 'Strategic Business Units']
          
