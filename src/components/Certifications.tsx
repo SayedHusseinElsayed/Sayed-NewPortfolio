@@ -4,6 +4,16 @@ import { Award, ExternalLink, Calendar } from 'lucide-react';
 
 const Certifications: React.FC = () => {
   const certifications = [
+       {
+      title: 'Google Generative AI Leader',
+      issuer: 'Google Cloud',
+      date: '2025',
+      credentialId: 'GAL',
+      description: 'Cloud computing fundamentals and AWS services knowledge',
+      badgeUrl: 'https://www.credly.com/badges/cb8478ba-aa53-4711-814e-9aea0323c81b',
+      skills: ['AI Ethics', 'Artificial Intelligence (AI)', 'Artificial Intelligence Applications', 'Business Acumen', 'Business Analysis', 'Business Awareness', 'Cloud Computing', 'Generative AI', 'Google Cloud Platform (GCP)'. 'Strategic Business Units']
+         
+    },
     {
       title: 'AWS Cloud Practitioner',
       issuer: 'Amazon Web Services',
