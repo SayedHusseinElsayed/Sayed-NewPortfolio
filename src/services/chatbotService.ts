@@ -16,10 +16,12 @@ export interface QuestionPattern {
 const patterns: QuestionPattern[] = [
   {
     patterns: [
-      /who (is|are) (you|sayed|he)/i,
-      /tell me about (yourself|sayed|you)/i,
+      /who (is|are) (you|sayed|he|she)/i,
+      /tell me about (yourself|sayed|you|him|her)/i,
       /introduce yourself/i,
-      /what do you do/i
+      /what do you do/i,
+      /who are you/i,
+      /your profile/i
     ],
     response: () =>
       `${knowledgeBase.personal.name} is a ${knowledgeBase.personal.title} based in ${knowledgeBase.personal.location}. ${knowledgeBase.summary}`,
@@ -27,10 +29,11 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /where (do you|does he) work/i,
+      /where (do you|does he|she) work/i,
       /current (job|position|role|company)/i,
       /working (at|for)/i,
-      /(what|where) is (your|his) current/i
+      /(what|where) is (your|his|her) current/i,
+      /now (working|employed|at|for)/i
     ],
     response: () => {
       const current = knowledgeBase.experience[0];
@@ -42,8 +45,10 @@ const patterns: QuestionPattern[] = [
     patterns: [
       /experience/i,
       /work history/i,
-      /previous (jobs|companies|roles)/i,
-      /worked (at|for)/i
+      /previous (jobs|companies|roles|positions)/i,
+      /worked (at|for|with)/i,
+      /career history/i,
+      /professional background/i
     ],
     response: () => {
       const exp = knowledgeBase.experience.map((e, i) =>
@@ -84,7 +89,9 @@ const patterns: QuestionPattern[] = [
   {
     patterns: [
       /powerschool/i,
-      /school/i
+      /school/i,
+      /american international/i,
+      /ais/i
     ],
     response: () => {
       const school = knowledgeBase.experience.find(e => e.company.includes('School'));
@@ -101,7 +108,9 @@ const patterns: QuestionPattern[] = [
       /technologies/i,
       /tech stack/i,
       /programming languages/i,
-      /what (can you|do you) (do|know)/i
+      /what (can you|do you) (do|know)/i,
+      /your abilities/i,
+      /expertise/i
     ],
     response: () => {
       const skillSummary = Object.entries(knowledgeBase.skills)
@@ -113,8 +122,7 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /\.net|dotnet|c#|csharp/i,
-      /programming/i
+      /\.net|dotnet|c#|csharp|coding|developer skills|programming/i
     ],
     response: () =>
       `Proficient in C# and .NET development with 11+ years of experience. Also skilled in JavaScript, Python, HTML/CSS, and Flutter. Strong background in MVC5, Bootstrap, and jQuery.`,
@@ -122,8 +130,7 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /database|sql/i,
-      /data/i
+      /database|sql|data management/i
     ],
     response: () =>
       `Extensive experience with Microsoft SQL Server, database design, and data integration. Also worked with PowerSchool, POS systems, and various database management tasks.`,
@@ -131,7 +138,7 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /cloud|aws|azure/i
+      /cloud|aws|azure|infrastructure/i
     ],
     response: () =>
       `AWS Cloud Practitioner certified with experience in Azure and Google Console Admin. Skilled in RESTful APIs, webhooks, and system integration. Knowledgeable in cloud architecture and deployment.`,
@@ -139,9 +146,7 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /certifications?/i,
-      /certified/i,
-      /certificates/i
+      /certifications?|certified|certificates|qualifications|credentials/i
     ],
     response: () => {
       const certs = knowledgeBase.certifications
@@ -162,8 +167,9 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /education|degree|university|studied/i,
-      /where did (you|he) study/i
+      /education|degree|university|studied|academic/i,
+      /where did (you|he|she) study/i,
+      /school education/i
     ],
     response: () =>
       `${knowledgeBase.education.degree} from ${knowledgeBase.education.institution}, graduated in ${knowledgeBase.education.year}.`,
@@ -171,8 +177,9 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /contact|email|phone|reach|get in touch/i,
-      /how (can|do) i contact/i
+      /contact|email|phone|reach|get in touch|communication/i,
+      /how (can|do) i (contact|reach|get in touch)/i,
+      /contact details/i
     ],
     response: () =>
       `You can reach out via:\n- Email: ${knowledgeBase.personal.email}\n- Phone/WhatsApp: ${knowledgeBase.personal.phone}\n- LinkedIn: ${knowledgeBase.personal.linkedin}`,
@@ -188,7 +195,7 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /phone|whatsapp|call/i
+      /phone|whatsapp|call|mobile|telephone/i
     ],
     response: () =>
       `Phone/WhatsApp: ${knowledgeBase.personal.phone}`,
@@ -196,7 +203,9 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /location|where (do you|does he) live|based/i
+      /location|where (do you|does he|she) live|based|address|city|country|hometown/i,
+      /sayed.*location/i,
+      /where.*located/i
     ],
     response: () =>
       `Based in ${knowledgeBase.personal.location}, with experience working remotely for US companies.`,
@@ -204,7 +213,15 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /languages?|speak/i
+      /linkedin/i
+    ],
+    response: () =>
+      `LinkedIn: ${knowledgeBase.personal.linkedin}`,
+    category: 'contact'
+  },
+  {
+    patterns: [
+      /languages?|speak|fluent|linguistic/i
     ],
     response: () => {
       const langs = knowledgeBase.languages
@@ -216,9 +233,8 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /years? of experience/i,
-      /how long/i,
-      /how many years/i
+      /years? of experience|how long|how many years|total experience/i,
+      /years in industry/i
     ],
     response: () =>
       `11+ years of professional experience in application support, development, and technical solutions.`,
@@ -226,7 +242,7 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /remote|work from home/i
+      /remote|work from home|distributed|telecommute/i
     ],
     response: () =>
       `Yes, experienced in remote work. Currently working remotely for CypherLearning (USA) and previously worked remotely for DocuSign (USA). Open to remote opportunities worldwide.`,
@@ -234,7 +250,8 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /available|looking for|job|opportunity|hire/i
+      /available|looking for|job|opportunity|hire|recruitment|vacancy/i,
+      /are you (available|looking|hiring)/i
     ],
     response: () =>
       `Open to new opportunities in application support, SaaS platforms, developer relations, and full-stack development. Feel free to reach out at ${knowledgeBase.personal.email}`,
@@ -242,7 +259,7 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /api|integration/i
+      /api|integration|webhook|rest|connectivity/i
     ],
     response: () =>
       `Extensive experience with APIs and integrations, including DocuSign APIs, RESTful APIs, webhooks, Salesforce integration, and SSO implementations. Worked with API troubleshooting and development support.`,
@@ -250,10 +267,40 @@ const patterns: QuestionPattern[] = [
   },
   {
     patterns: [
-      /support|customer service/i
+      /support|customer service|saas|troubleshooting|issue resolution/i
     ],
     response: () =>
       `Strong background in technical support and customer service with 11+ years of experience. Specialized in SaaS support, bug investigation, troubleshooting, and working directly with customers to solve complex technical challenges.`,
+    category: 'skills'
+  },
+  {
+    patterns: [
+      /resume|cv|curriculum vitae|portfolio/i
+    ],
+    response: () =>
+      `You can find my resume and detailed portfolio on the main page. It covers my complete professional history, skills, and accomplishments. Feel free to download the PDF or reach out for more information.`,
+    category: 'about'
+  },
+  {
+    patterns: [
+      /system middle east/i,
+      /middle east experience/i
+    ],
+    response: () => {
+      const sme = knowledgeBase.experience.find(e => e.company === 'System Middle East');
+      if (sme) {
+        return `Worked at System Middle East from ${sme.period} in multiple roles, including ${knowledgeBase.experience.filter(e => e.company === 'System Middle East').map(e => e.title).join(' and ')}. Handled POS systems, queue management, and technical support across UAE and Saudi Arabia.`;
+      }
+      return 'Worked at System Middle East with experience in POS systems and technical support.';
+    },
+    category: 'experience'
+  },
+  {
+    patterns: [
+      /pos|restaurant|retail|hotel/i
+    ],
+    response: () =>
+      `Extensive experience with POS systems for restaurants, retail shops, and hotels. Worked with setup, training, and technical support for 100+ businesses across UAE and Saudi Arabia.`,
     category: 'skills'
   }
 ];
@@ -267,6 +314,58 @@ const thanks = [
   /^(thanks|thank you|thx|ty)/i,
   /appreciate it/i
 ];
+
+const calculateSimilarity = (str1: string, str2: string): number => {
+  const s1 = str1.toLowerCase();
+  const s2 = str2.toLowerCase();
+  const longer = s1.length > s2.length ? s1 : s2;
+  const shorter = s1.length > s2.length ? s2 : s1;
+
+  if (longer.length === 0) return 1.0;
+
+  const editDistance = getEditDistance(longer, shorter);
+  return (longer.length - editDistance) / longer.length;
+};
+
+const getEditDistance = (s1: string, s2: string): number => {
+  const costs: number[] = [];
+  for (let i = 0; i <= s1.length; i++) {
+    let lastValue = i;
+    for (let j = 0; j <= s2.length; j++) {
+      if (i === 0) {
+        costs[j] = j;
+      } else if (j > 0) {
+        let newValue = costs[j - 1];
+        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+          newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+        }
+        costs[j - 1] = lastValue;
+        lastValue = newValue;
+      }
+    }
+    if (i > 0) costs[s2.length] = lastValue;
+  }
+  return costs[s2.length];
+};
+
+const findBestMatchKeyword = (message: string, keywords: string[]): { word: string; score: number } | null => {
+  let bestMatch = null;
+  let bestScore = 0.4;
+
+  for (const keyword of keywords) {
+    if (message.toLowerCase().includes(keyword.toLowerCase())) {
+      return { word: keyword, score: 1.0 };
+    }
+
+    const similarity = calculateSimilarity(message, keyword);
+    if (similarity > bestScore) {
+      bestScore = similarity;
+      bestMatch = { word: keyword, score: similarity };
+    }
+  }
+
+  return bestMatch;
+};
 
 export const getBotResponse = (userMessage: string): string => {
   const message = userMessage.trim();
@@ -295,7 +394,49 @@ export const getBotResponse = (userMessage: string): string => {
     }
   }
 
-  return `I can answer questions about ${knowledgeBase.personal.name}'s:\n- Professional experience and work history\n- Skills and technologies\n- Certifications and education\n- Contact information\n- Languages and availability\n\nCould you please rephrase your question or ask about one of these topics?`;
+  const keywords = [
+    'experience', 'skills', 'certifications', 'contact', 'education',
+    'location', 'address', 'phone', 'email', 'work', 'job', 'role',
+    'languages', 'background', 'career', 'resume', 'portfolio',
+    'abilities', 'expertise', 'profile', 'background'
+  ];
+
+  const bestMatch = findBestMatchKeyword(message, keywords);
+
+  if (bestMatch && bestMatch.score > 0.5) {
+    const matchType = bestMatch.word.toLowerCase();
+
+    if (['location', 'address', 'city', 'country'].some(k => matchType.includes(k))) {
+      return `Based in ${knowledgeBase.personal.location}, with experience working remotely for US companies.`;
+    }
+    if (['experience', 'work', 'career', 'background'].some(k => matchType.includes(k))) {
+      const exp = knowledgeBase.experience.map((e, i) =>
+        `${i + 1}. ${e.title} at ${e.company} (${e.period})`
+      ).join('\n');
+      return `Here's the work experience:\n${exp}`;
+    }
+    if (['skills', 'abilities', 'expertise'].some(k => matchType.includes(k))) {
+      const skillSummary = Object.entries(knowledgeBase.skills)
+        .map(([category, skills]) => `${category}: ${skills.slice(0, 4).join(', ')}`)
+        .join('\n');
+      return `Here are the key skills:\n\n${skillSummary}`;
+    }
+    if (['contact', 'phone', 'email'].some(k => matchType.includes(k))) {
+      return `You can reach out via:\n- Email: ${knowledgeBase.personal.email}\n- Phone/WhatsApp: ${knowledgeBase.personal.phone}\n- LinkedIn: ${knowledgeBase.personal.linkedin}`;
+    }
+    if (['certifications'].some(k => matchType.includes(k))) {
+      const certs = knowledgeBase.certifications
+        .slice(0, 5)
+        .map(c => `- ${c.title} (${c.issuer}, ${c.date})`)
+        .join('\n');
+      return `Key certifications include:\n${certs}`;
+    }
+    if (['education'].some(k => matchType.includes(k))) {
+      return `${knowledgeBase.education.degree} from ${knowledgeBase.education.institution}, graduated in ${knowledgeBase.education.year}.`;
+    }
+  }
+
+  return `I can answer questions about ${knowledgeBase.personal.name}'s:\n- Professional experience and work history\n- Skills and technologies\n- Certifications and education\n- Contact information (email, phone, LinkedIn)\n- Location and availability\n- Languages and background\n\nTry asking something like "What is your address?" or "Tell me about your skills"`;
 };
 
 export const getSuggestedQuestions = (): string[] => {
